@@ -1,0 +1,110 @@
+
+Assignment –7
+
+
+Summarizing Data with Aggregate Functions.
+1) Write a query that counts all orders for October 3.
+ans:
+mysql> select count(*) from orders
+    -> where odate='1990-10-03';
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.01 sec)
+
+-----------------------------------------------------------------------------
+2) Write a query that counts the number of different non-NULL city values in the 
+Customers table.
+ans:
+
+mysql> select count(*) from customers
+    -> where city != null;
++----------+
+| count(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------
+3) Write a query that selects each customer’s smallest order.
+ans:
+
+mysql> mysql> select min(amt) from orders
+    -> group by cnum;
++----------+
+| min(amt) |
++----------+
+|    18.69 |
+|   767.19 |
+|  1900.10 |
+|  5160.45 |
+|  1713.23 |
+|    75.75 |
+|  4723.00 |
++----------+
+7 rows in set (0.00 sec)
+--------------------------------------------------------------------------
+4) Write a query that selects the first customer, in alphabetical order, whose name 
+begins with G.
+Ans:
+
+mysql> select cname from customers
+    -> where cname like 'G%'
+    -> order by cname
+    -> limit 1;
++----------+
+| cname    |
++----------+
+| Giovanni |
++----------+
+1 row in set (0.00 sec)
+
+
+
+-----------------------------------------------------------------------------------
+5) Write a query that selects the highest rating in each city.
+ans:
+mysql> select max(rating) from customers
+    -> group by city;
++-------------+
+| max(rating) |
++-------------+
+|         100 |
+|         100 |
+|         300 |
+|         300 |
++-------------+
+4 rows in set (0.00
+
+------------------------------------------------------------------------------------
+6) Write a query that counts the number of salespeople registering orders for each 
+day. (If a salesperson has more than one order on a given day, he or she should be 
+counted only once.)
+Ans:
+mysql> select odate,snum, count(*)
+    -> from orders
+    -> group by odate, snum;
++------------+------+----------+
+| odate      | snum | count(*) |
++------------+------+----------+
+| 1990-10-03 | 1007 |        2 |
+| 1990-10-03 | 1001 |        1 |
+| 1990-10-03 | 1004 |        1 |
+| 1990-10-03 | 1002 |        1 |
+| 1990-10-04 | 1003 |        1 |
+| 1990-10-04 | 1002 |        1 |
+| 1990-10-05 | 1001 |        1 |
+| 1990-10-06 | 1002 |        1 |
+| 1990-10-06 | 1001 |        1 |
++------------+------+----------+
+9 rows in set (0.00 sec)
+
+
+
+
+
+----------------------------------------------------------------------------------------

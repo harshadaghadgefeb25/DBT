@@ -1,0 +1,110 @@
+
+Assignment – 18
+Maintaining the Integrity of your Data.
+1) Create a table called Cityorders. This will contain the same onum, amt and snum 
+fields as the Orders table, and the same cnum and city fields as the Customers 
+table, so that each customer’s order will be entered into this table along with his 
+or her city. Onum will be the primary key of Cityorders. All of the fields in 
+Cityorders will be constrained to match the Customers and Orders tables. Assume 
+the parent keys in these tables already have the proper constraints.
+ANS:
+
+
+---------------------------------------------------------------------------------
+2) Redefine the Orders table as follows:- add a new column called prev, which will 
+identify, for each order, the onum of the previous order for that current customer. 
+Implement this with a foreign key referring to the Orders table itself. The foreign 
+key should refer as well to the cnum of the customer, providing a definite 
+enforced link between the current order and the one referenced.
+ANS:
+
+
+=========================================================================================
+Assignment – 19
+Views.
+1) Create a view that shows all of the customers who have the highest ratings.
+ANS:
+mysql> CREATE VIEW V1 AS
+    -> SELECT * FROM CUSTOMERS
+    -> WHERE RATING=(SELECT MAX(RATING) FROM CUSTOMERS);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM V1;
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+2 rows in set (0.01 sec)
+
+
+
+---------------------------------------------------------------------------------
+2) Create a view that shows the number of salespeople in each city.
+ANS:
+mysql> CREATE VIEW V3 AS
+    -> SELECT CITY,COUNT(CITY)
+    -> FROM SALESPEOPLE
+    -> GROUP BY CITY;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM V3;
++-----------+-------------+
+| CITY      | COUNT(CITY) |
++-----------+-------------+
+| London    |           2 |
+| San Jose  |           1 |
+| Barcelona |           1 |
+| New York  |           1 |
++-----------+-------------+
+4 rows in set (0.00 sec)
+--------------------------------------------------------------------------------
+3) Create a view that shows the average and total orders for each salesperson after 
+his or her name. Assume all names are unique.
+ANS:
+mysql> CREATE VIEW V7 AS
+    -> SELECT SNAME,
+    -> AVG(ONUM),COUNT(ONUM)
+    -> FROM SALESPEOPLE
+    -> JOIN ORDERS USING(SNUM)
+    -> GROUP BY SNAME;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM V7;
++---------+-----------+-------------+
+| SNAME   | AVG(ONUM) | COUNT(ONUM) |
++---------+-----------+-------------+
+| Rifkin  | 3003.5000 |           2 |
+| Peel    | 3007.3333 |           3 |
+| Motika  | 3002.0000 |           1 |
+| Serres  | 3007.3333 |           3 |
+| Axelrod | 3009.0000 |           1 |
++---------+-----------+-------------+
+5 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------
+4) Create a view that shows each salesperson with multiple customers.
+ANS:
+mysql> CREATE VIEW V5 AS
+    -> SELECT S.SNAME,C.CNAME
+    -> FROM CUSTOMERS C,SALESPEOPLE S
+    -> WHERE C.SNUM=S.SNUM;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM V5;
++--------+----------+
+| SNAME  | CNAME    |
++--------+----------+
+| Peel   | Hoffman  |
+| Serres | Giovanni |
+| Serres | Liu      |
+| Serres | Grass    |
+| Peel   | Clemens  |
+| Rifkin | Cisneros |
+| Motika | Periera  |
++--------+----------+
+7 rows in set (0.00 se
+
+-------------------------------------------------------------------------------

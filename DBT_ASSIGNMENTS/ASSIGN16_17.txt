@@ -1,0 +1,85 @@
+
+Assignment – 16
+Creating Tables and Indexes.
+1) Write a command that will enable a user to pull orders grouped by date out of the 
+Orders table quickly.
+ANS:
+CREATE INDEX d_order ON orders(odate);
+
+----------------------------------------------------------------------------------------------------
+2) If the Orders table has already been created, how can you force the onum field to 
+be unique (assume all current values are unique)?
+ANS:
+ALTER TABLE ORDERS MODIFY ONUM CONSTRAINT PRIMARY KEY;
+-----------------------------------------------------------------------------------
+3) Create an index that would permit each salesperson to retrieve his or her orders 
+grouped by date quickly.
+ANS:
+CREATE INDEX I_DATE ON orders(odate);
+--------------------------------------------------------------------------------------
+4) Let us assume that each salesperson is to have only one customer of a given 
+rating, and that this is currently the case. Enter a command that enforces it.
+ANS:
+ALTER TABLE customers MODIFY rating PRIMARY KEY;
+=================================================================================================
+
+Assignment – 17
+Constraining the Values of your data.
+1) Create the Orders table so that all onum values as well as all combinations of 
+cnum and snum are different from one another, and so that NULL values are 
+excluded from the date field.
+ANS:
+CREATE TABLE orders1 ( onum number(4), cnum number(4), 
+sname number(4), 
+odate date NOT NULL, 
+CONSTRAINT p_k_1 
+PRIMARY key(onum,cnum,sname) );
+
+
+
+---------------------------------------------------------------------------
+2) Create the Salespeople table so that the default commission is 10% with no 
+NULLS permitted, snum is the primary key, and all names fall alphabetically 
+between A and M, inclusive (assume all names will be uppercase).
+ANS:
+CREATE TABLE salespeople1 ( comm number(3) DEFAULT 10, snum number(4) PRIMARY KEY, sname varchar2(10) check(substr(upper(sname),1,1) BETWEEN 'A' AND 'B') );
+
+ --Table created.
+
+INSERT INTO salespeople1
+VALUES (20,
+        1212,
+        'www');
+
+INSERT INTO salespeople1
+VALUES (20,
+        1212,
+        'www')
+
+------------------------------------------------------------------------------
+3) Create the Orders table, making sure that the onum is greater than the cnum, and 
+the cnum is greater that the snum. Allow no NULLS in any of these three fields.
+ANS:
+
+CREATE TABLE orders12 ( onum number(4), amt number(7,2), odate date, cnum number(4), snum number(4), CONSTRAINT on_cn_sn check(cnum>cnum
+                                                                                                                               AND cnum>snum) );
+
+ --Table created.
+
+INSERT INTO orders12
+VALUES(10,
+       10,
+       '12-jan-1990',
+       10,
+       10);
+
+INSERT INTO orders12
+VALUES(10,
+       10,
+       '12-jan-1990',
+       10,
+       10) --*
+ --ERROR at line 1:
+ --ORA-02290: check constraint (ORAD178.ON_CN_SN) violated
+
+=======================================================================================

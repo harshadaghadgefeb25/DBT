@@ -1,0 +1,203 @@
+
+Assignment – 12
+
+Using the operators IN, ANY, and ALL.
+
+1) Write a query that selects all customers whose ratings are equal to or greater than 
+ANY of Serres’. 
+Ans:
+ select *
+    -> from customers
+    -> where rating >= any
+    -> (select rating
+    -> from customers
+    -> where snum In(
+    -> select snum
+    -> from salespeople
+    -> where sname='Serres'));
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    100 | 1002 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Periera  | Rome     |    100 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.01 sec)
+
+
+---------------------------------------------------------------------------------
+2) Write a query using ANY or ALL that will find all salespeople who have no 
+customers located in their city. 
+ans:
+mysql> select snum
+    -> from salespeople
+    -> where(snum,city) not in(select snum,
+    -> city from customers);
++------+
+| snum |
++------+
+| 1004 |
+| 1007 |
+| 1003 |
++------+
+
+
+
+-------------------------------------------------------------------------------------
+3) Write a query that selects all orders for amounts greater than any for the 
+customers in London. 
+ans:
+mysql> select *
+    -> from orders
+    -> where amt>any
+    -> (select amt from orders
+    -> where cnum in (select cnum
+    -> from customers
+    -> where city='London'));
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+7 rows in set (0.00 sec)
+
+
+
+
+
+-----------------------------------------------------------------------------------------
+4) Write the above query using MIN or MAX. 
+ans:
+mysql> select * from orders
+    -> where amt >
+    -> (select min(amt)
+    -> from customers
+    -> natural join orders
+    -> where city='London');
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+7 rows in set (0.01 sec)
+
+
+
+
+--------------------------------------------------------------------------------------------
+
+Assignment – 13
+Using the UNION clause.
+
+
+1) Create a union of two queries that shows the names, cities, and ratings of all 
+customers. Those with rating of 200 or greater will also have the words “High 
+Rating”, while the others will have the words “Low Rating”.
+ans:
+mysql> select cname,city,rating
+    -> from customers
+    -> union
+    -> select cname,city,
+    -> case
+    -> when rating>=200 then "High Rating"
+    -> else "LOw rating"
+    -> end as rating
+    -> from customers;
++----------+----------+-------------+
+| cname    | city     | rating      |
++----------+----------+-------------+
+| Hoffman  | London   | 100         |
+| Giovanni | Rome     | 100         |
+| Liu      | San Jose | 200         |
+| Grass    | Berlin   | 300         |
+| Clemens  | London   | 100         |
+| Cisneros | San Jose | 300         |
+| Periera  | Rome     | 100         |
+| Hoffman  | London   | LOw rating  |
+| Giovanni | Rome     | LOw rating  |
+| Liu      | San Jose | High Rating |
+| Grass    | Berlin   | High Rating |
+| Clemens  | London   | LOw rating  |
+| Cisneros | San Jose | High Rating |
+| Periera  | Rome     | LOw rating  |
++----------+----------+-------------+
+14 rows in set (0.01 sec)
+
+
+-------------------------------------------------------------------------------------------------
+2) Write a command that produces the name and number of each salesperson and 
+each customer with more than one current order. Put the results in alphabetical 
+order.
+ans:
+mysql> SELECT sname,
+    ->        snum,
+    ->        cname
+    -> FROM salespeople
+    -> JOIN customers using(snum)
+    -> WHERE snum IN
+    ->     (SELECT snum
+    ->      FROM customers
+    ->      GROUP BY snum
+    ->      HAVING count(snum)>1)
+    -> ORDER BY sname,
+    ->          cname;
++--------+------+----------+
+| sname  | snum | cname    |
++--------+------+----------+
+| Peel   | 1001 | Clemens  |
+| Peel   | 1001 | Hoffman  |
+| Serres | 1002 | Giovanni |
+| Serres | 1002 | Grass    |
+| Serres | 1002 | Liu      |
++--------+------+----------+
+5 rows in set (0.01 sec)
+
+
+
+----------------------------------------------------------------------------------------------
+3) Form a union of three queries. Have the first select the snums of all salespeople in 
+San Jose; the second, the cnums of all customers in San Jose; and the third the 
+onums of all orders on October 3. Retain duplicates between the last two queries 
+but eliminate any redundancies between either of them and the first. 
+(Note: in the sample tables as given, there would be no such redundancy. This is 
+besides the point.)
+ans:
+
+mysql> SELECT snum
+    -> FROM salespeople
+    -> WHERE city='san jose'
+    -> UNION
+    -> SELECT DISTINCT snum
+    -> FROM orders
+    -> WHERE snum IN
+    ->     (SELECT snum
+    ->      FROM orders
+    ->      WHERE odate LIKE '03-OCT-%');
++------+
+| snum |
++------+
+| 1002 |
++------+
+1 row in set (0.00 sec)
+
+
+
+
+
+===========================================================================================

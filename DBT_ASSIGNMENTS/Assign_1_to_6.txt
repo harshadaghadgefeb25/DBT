@@ -1,0 +1,770 @@
+Assignment 1:
+
+Microsoft Windows [Version 10.0.19045.5608]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 9.0\bin>mysql -u root -p
+Enter password: ****
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+
+C:\Program Files\MySQL\MySQL Server 9.0\bin>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 9.0.1 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES
+    -> ^C
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.04 sec)
+
+mysql> create user harshada
+    -> ^C
+mysql> create user harshada identified by cdac;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cdac' at line 1
+mysql> create user 'harshada' identified by 'cdac';
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show users;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'users' at line 1
+mysql> show 'users';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''users'' at line 1
+mysql> SELECT user FROM mysql.user;
++------------------+
+| user             |
++------------------+
+| harshada         |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
++------------------+
+5 rows in set (0.00 sec)
+
+mysql> create database databasename;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| databasename       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> create database LABWORK;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| databasename       |
+| information_schema |
+| labwork            |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> drop database databasename;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| labwork            |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON LABWORK.* TO harshada;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> FLUSH PRIVILEDGES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PRIVILEDGES' at line 1
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> EXIT;
+Bye
+
+C:\Program Files\MySQL\MySQL Server 9.0\bin>MYSQL -U harshada -P
+MYSQL: [ERROR] MYSQL: option '-P' requires an argument.
+
+C:\Program Files\MySQL\MySQL Server 9.0\bin>mysql -u harshada -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 9.0.1 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table SALESPEOPLE(
+    -> Snum int(4),
+    -> Sname varchar(10),
+    -> City varchar(10),
+    -> Comm float(3,2));
+ERROR 1046 (3D000): No database selected
+mysql> use labwork;
+Database changed
+mysql> create table SALESPEOPLE(
+    -> Snum int(4),
+    -> Sname varchar(10),
+    -> City varchar(10),
+    -> Comm float(3,2));
+Query OK, 0 rows affected, 2 warnings (0.04 sec)
+
+mysql> create table CUSTOMERS(
+    -> Cnum int(4),
+    -> Cname varchar(10),
+    -> City varchar(10),
+    -> Rating int(4),
+    -> Snum int(4));
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql> show warnings;
++---------+------+------------------------------------------------------------------------------+
+| Level   | Code | Message                                                                      |
++---------+------+------------------------------------------------------------------------------+
+| Warning | 1681 | Integer display width is deprecated and will be removed in a future release. |
+| Warning | 1681 | Integer display width is deprecated and will be removed in a future release. |
+| Warning | 1681 | Integer display width is deprecated and will be removed in a future release. |
++---------+------+------------------------------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql> create table ORDERS(
+    -> Onum int(),
+    -> Amt float(7,2),
+    -> Odate date,
+    -> Cnum int(),
+    -> Snum int());
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '),
+Amt float(7,2),
+Odate date,
+Cnum int(),
+Snum int())' at line 2
+mysql> select * from customers;
+Empty set (0.01 sec)
+
+mysql> desc cutomers;
+ERROR 1146 (42S02): Table 'labwork.cutomers' doesn't exist
+mysql> desc customers;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| Cnum   | int         | YES  |     | NULL    |       |
+| Cname  | varchar(10) | YES  |     | NULL    |       |
+| City   | varchar(10) | YES  |     | NULL    |       |
+| Rating | int         | YES  |     | NULL    |       |
+| Snum   | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql> DESC salespeople
+    -> ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Snum  | int         | YES  |     | NULL    |       |
+| Sname | varchar(10) | YES  |     | NULL    |       |
+| City  | varchar(10) | YES  |     | NULL    |       |
+| Comm  | float(3,2)  | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table orders()
+    -> ^C
+mysql> create table ORDERS(
+    -> Onum int(4),
+    -> Amt float(7,2),
+    -> Odate date,
+    -> Cnum int(4),
+    -> Snum int(4));
+Query OK, 0 rows affected, 4 warnings (0.03 sec)
+
+mysql> insert into SALESPEOPLE
+    -> values(1001,'Peel','London',.12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into SALESPEOPLE
+    -> insert into SALESPEOPLE^C
+mysql> insert into SALESPEOPLE(SNUM^C
+mysql> delete salespeople;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> drop table salesperson;
+ERROR 1051 (42S02): Unknown table 'labwork.salesperson'
+mysql> drop table salespeople;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table customer;
+ERROR 1051 (42S02): Unknown table 'labwork.customer'
+mysql> drop table customers;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table orders;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE SALESPEOPLE(
+    -> SNUM INT(4),
+    -> SNAME VARCHAR(10),
+    -> CITY VARHAR(10),
+    -> COMM FLOAT(3,2));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VARHAR(10),
+COMM FLOAT(3,2))' at line 4
+mysql> CREATE TABLE SALESPEOPLE(
+    -> SNUM INT(4),
+    -> SNAME VARCHAR(10),
+    -> CITY VARHAR(10),
+    -> ^CUM INT(4),
+mysql> CREATE TABLE SALESPEOPLE(
+    -> SNUM INT(4),
+    -> SNAME VARCHAR(10),
+    -> CITY VARCHAR(10),
+    -> COMM FLOAT(3,2));
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> SHOW TABLES
+    -> ;
++-------------------+
+| Tables_in_labwork |
++-------------------+
+| salespeople       |
++-------------------+
+1 row in set (0.01 sec)
+
+mysql> DESC SALESPEOPLE;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| SNUM  | int         | YES  |     | NULL    |       |
+| SNAME | varchar(10) | YES  |     | NULL    |       |
+| CITY  | varchar(10) | YES  |     | NULL    |       |
+| COMM  | float(3,2)  | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table ORDERS(
+    -> Onum  int(4),
+    -> ^C
+mysql> create table ORDERS(
+    -> ONUM  int(4),
+    -> AMT FLOAT(7,2),
+    -> ODATE DATE,
+    -> CNUM INT(4),
+    -> SNUM INT(4));
+Query OK, 0 rows affected, 4 warnings (0.03 sec)
+
+mysql> CREATE TABLE CUSTOMERS(
+    -> CNUM INT(4),
+    -> CNAME VARCHAR(10),
+    -> CITY VARCHAR(10),
+    -> RATING INT(4),
+    -> SNUM INT(4));
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql> INSERT INTO SALESPEOPLE
+    -> VALUES(1001,'Peel','London',.12),
+    -> VALUES(1002,'Serres','San Jose',.13),
+    -> VALUES(1004,'Motika','London',.11),
+    -> VALUES(1007,'Rifkin','Barcelona',.15),
+    -> VALUES(1003,'Axelrod','New York',.10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALUES(1002,'Serres','San Jose',.13),
+VALUES(1004,'Motika','London',.11),
+VALUES' at line 3
+mysql> INSERT INTO SALESPEOPLE
+    -> VALUES(1001,'Peel','London',.12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO SALESPEOPLE
+    -> VALUES(1002,'Serres','San Jose',.13),
+    -> (1004,'Motika','London',.11);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO SALESPEOPLE
+    -> VALUES(1007,'Rifkin','Barcelona',.15),
+    -> (1003,'Axelrod','New York',.10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 3
+mysql> INSERT INTO SALESPEOPLE
+    -> VALUES(1007,'Rifkin','Barcelona',.15),
+    -> (1003,'Axelrod','New York',.10);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from salespeople;
++------+---------+-----------+------+
+| SNUM | SNAME   | CITY      | COMM |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec
+
+
+mysql> INSERT INTO CUSTOMERS
+    -> VALUES(2001,'Hoffman','London',100,1001),
+    -> (2002,'Giovanni','Rome',100,1002),
+    -> (2003,'Liu','San Jose',200,1002),
+    -> (2004,'Grass','Berlin',300,1002),
+    -> (2006,'Clemens','London',100,1001),
+    -> (2008,'Cisneros','San Jose',300,1007),
+    -> (2007,'Periera','Rome',100,1004);
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> insert into ORDERS
+    -> values(3001, 18.69,'1990-10-03',2008,1007),
+    -> (3003, 767.19,'1990-10-03',2001,1001),
+    -> (3002,1900.10,'1990-10-03',2007,1004),
+    -> (3005,5160.45,'1990-10-03',2003,1002),
+    -> (3006,1098.16,'1990-10-03',2008,1007),
+    -> (3009,1713.23,'1990-10-04',2002,1003),
+    -> (3007,75.75,'1990-10-04',2004,1002),
+    -> (3008,4723.00,'1990-10-05',2006,1001),
+    -> (3010,1309.95,'1990-10-06',2004,1002),
+    -> (3011,9891.88,'1990-10-06',2006,1001);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from CUSTOMERS;
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2001 | Hoffman  | London   |    100 | 1001 |
+| 2002 | Giovanni | Rome     |    100 | 1002 |
+| 2003 | Liu      | San Jose |    200 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
+| 2007 | Periera  | Rome     |    100 | 1004 |
++------+----------+----------+--------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from ORDERS;
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+10 rows in set (0.00 sec)
+
+=============================================================================================================================================
+
+Assignment 2:
+
+Introducing Relational Databases.
+1) Which field of the Customers table is the primary key?
+Ans:cnum is primary key
+
+
+2) What is the 4th column of the Customers table?
+Ans:Rating is the 4th column of the Customers table.
+
+
+3) What is another word for row? For column?
+Ans:Another word for row is: records or tuples
+	Another word for column is: fields or attributes or properties
+
+
+
+4) Why isn’t it possible to see the first five rows of a table?
+Ans:
+
+
+
+=============================================================================================================================================== 
+
+Assignment –3
+Overview of SQL.
+1) Does ANSI recognize the data type DATE?
+ans:
+	yes..ANSI recognize the data type date and its format is 'yyyy-mm-dd'
+
+
+
+-------------------------------------------------------------------------------------
+2) Which subdivision of SQL is used to insert values in tables?
+ans:
+	DML: Data Manupulation Language is used to insert values in tables.
+
+
+
+=======================================================================================
+
+Assignment –4
+Retrieving Information from Tables.
+1) Write a select command that produces the order number, amount, and date for all 
+rows in the Orders table.
+ans:
+mysql> select onum,amt, odate from orders;
++------+---------+------------+
+| onum | amt     | odate      |
++------+---------+------------+
+| 3001 |   18.69 | 1990-10-03 |
+| 3003 |  767.19 | 1990-10-03 |
+| 3002 | 1900.10 | 1990-10-03 |
+| 3005 | 5160.45 | 1990-10-03 |
+| 3006 | 1098.16 | 1990-10-03 |
+| 3009 | 1713.23 | 1990-10-04 |
+| 3007 |   75.75 | 1990-10-04 |
+| 3008 | 4723.00 | 1990-10-05 |
+| 3010 | 1309.95 | 1990-10-06 |
+| 3011 | 9891.88 | 1990-10-06 |
++------+---------+------------+
+10 rows in set (0.00 sec)
+
+
+
+-----------------------------------------------------------------------------------
+2) Write a query that produces all rows from the Customers table for which the 
+salesperson’s number is 1001.
+ans:
+mysql> select * from customers
+    -> where snum=1001;
++------+---------+--------+--------+------+
+| CNUM | CNAME   | CITY   | RATING | SNUM |
++------+---------+--------+--------+------+
+| 2001 | Hoffman | London |    100 | 1001 |
+| 2006 | Clemens | London |    100 | 1001 |
++------+---------+--------+--------+------+
+2 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------------------
+3) Write a query that displays the Salespeople table with the columns in the 
+following order: city, sname, snum, comm.
+ans:
+mysql> select city,sname,snum,comm from salespeople;
++-----------+---------+------+------+
+| city      | sname   | snum | comm |
++-----------+---------+------+------+
+| London    | Peel    | 1001 | 0.12 |
+| San Jose  | Serres  | 1002 | 0.13 |
+| London    | Motika  | 1004 | 0.11 |
+| Barcelona | Rifkin  | 1007 | 0.15 |
+| New York  | Axelrod | 1003 | 0.10 |
++-----------+---------+------+------+
+5 rows in set (0.00 sec)
+
+
+
+
+---------------------------------------------------------------------------------
+4) Write a select command that produces the rating followed by the name of each 
+customer in San Jose.
+ans:
+mysql> select rating, cname from customers
+    -> where city='San Jose';
++--------+----------+
+| rating | cname    |
++--------+----------+
+|    200 | Liu      |
+|    300 | Cisneros |
++--------+----------+
+2 rows in set (0.00 sec)
+
+
+
+
+----------------------------------------------------------------------------------
+5) Write a query that will produce the snum values of all salespeople (suppress the 
+duplicates) with orders in the Orders table.
+ans:
+mysql> select distinct(snum) from orders;
++------+
+| snum |
++------+
+| 1007 |
+| 1001 |
+| 1004 |
+| 1002 |
+| 1003 |
++------+
+5 rows in set (0.00 sec)
+
+
+======================================================================================
+
+Assignment –5 Relational and Logical 
+Operators.
+ 
+1) Write a query that will give you all orders for more than Rs. 1,000. 
+ans:
+
+mysql> select * from orders
+    -> where amt>1000;
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+7 rows in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------
+ 
+2) Write a query that will give you the names and cities of all salespeople in 
+London with a commission above .10. 
+ans:
+mysql> select sname, city
+    -> from salespeople
+    -> where city='London' and comm> .10;
++--------+--------+
+| sname  | city   |
++--------+--------+
+| Peel   | London |
+| Motika | London |
++--------+--------+
+2 rows in set (0.00 sec)
+
+
+
+------------------------------------------------------------------------------
+ 
+3) Write a query on the Customers table whose output will exclude all customers 
+with a rating <= 100, unless they are located in Rome. 
+ans:
+	mysql> select * from customers
+    -> where rating<=100 and city='Rome';
++------+----------+------+--------+------+
+| CNUM | CNAME    | CITY | RATING | SNUM |
++------+----------+------+--------+------+
+| 2002 | Giovanni | Rome |    100 | 1002 |
+| 2007 | Periera  | Rome |    100 | 1004 |
++------+----------+------+--------+------+
+2 rows in set (0.00 sec)
+
+
+
+
+----------------------------------------------------------------------------------
+ 
+4) What will be the output from the following query? 
+ 
+ Select * from Orders 
+ where (amt < 1000 OR 
+ NOT (odate = ‘1990-10-03’ 
+ AND cnum > 2003)); 
+ans:
+mysql> select * from orders
+    -> where (amt<1000 or
+    -> not (odate='1990-10-03'
+    -> and cnum>2003));
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+8 rows in set (0.00 sec)
+
+
+
+
+
+---------------------------------------------------------------------------
+ 
+5) What will be the output of the following query? 
+ 
+ Select * from Orders 
+ where NOT ((odate = ‘1990-10-03’ OR snum 
+ >1006) AND amt >= 1500);
+ans:
+mysql> select * from orders
+    -> where not((odate= '1990-10-03' or snum
+    -> >1006) and amt >= 1500);
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+8 rows in set (0.01 sec)
+
+
+
+
+-----------------------------------------------------------------------
+ 
+6) What is a simpler way to write this query? 
+ 
+ Select snum, sname, city, comm From Salespeople 
+where (comm > .12 OR comm <.14); 
+ans:
+select * from salespeople;
+
+================================================================================================================================================================
+Assignment –6
+
+Using Special Operators in Conditions.
+1) Write two different queries that would produce all orders taken on October 3rd or 4th, 1990.
+ANS: mysql> SELECT * FROM ORDERS
+    -> WHERE ODATE='1990-10-03' OR ODATE='1990-10-04';
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
++------+---------+------------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ORDERS
+    -> WHERE ODATE IN('1990-10-03', '1990-10-04');
++------+---------+------------+------+------+
+| ONUM | AMT     | ODATE      | CNUM | SNUM |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
++------+---------+------------+------+------+
+7 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+2) Write a query that selects all of the customers serviced by Peel or Motika.
+(Hint: the snum field relates the two tables to one another). 
+ans: 
+	mysql> SELECT C.*,S.*
+    -> FROM CUSTOMERS C,SALESPEOPLE S
+    -> WHERE C.SNUM=S.SNUM AND S.SNAME IN('Peel','Motika');
++------+---------+--------+--------+------+------+--------+--------+------+
+| CNUM | CNAME   | CITY   | RATING | SNUM | SNUM | SNAME  | CITY   | COMM |
++------+---------+--------+--------+------+------+--------+--------+------+
+| 2001 | Hoffman | London |    100 | 1001 | 1001 | Peel   | London | 0.12 |
+| 2006 | Clemens | London |    100 | 1001 | 1001 | Peel   | London | 0.12 |
+| 2007 | Periera | Rome   |    100 | 1004 | 1004 | Motika | London | 0.11 |
++------+---------+--------+--------+------+------+--------+--------+------+
+3 rows in set (0.00 sec)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+3) Write a query that will produce all the customers whose names begin with a letter from ‘A’ to ‘G’.
+ans: 
+mysql> select * from customers
+    -> where substring(cname,1) between 'A' and 'H';
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2002 | Giovanni | Rome     |    100 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * FROM CUSTOMERS
+    -> WHERE CNAME>='A' AND CNAME<='H';
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2002 | Giovanni | Rome     |    100 | 1002 |
+| 2004 | Grass    | Berlin   |    300 | 1002 |
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+4 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+4) Write a query that selects all customers whose names begin with the letter ‘C’.
+ans: 
+mysql> select * from customers
+    -> where cname like 'C%';
++------+----------+----------+--------+------+
+| CNUM | CNAME    | CITY     | RATING | SNUM |
++------+----------+----------+--------+------+
+| 2006 | Clemens  | London   |    100 | 1001 |
+| 2008 | Cisneros | San Jose |    300 | 1007 |
++------+----------+----------+--------+------+
+2 rows in set (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+5) Write a query that selects all orders except those with zeroes or NULLs in the amt field.
+ans:  SELECT * FROM ORDERS
+    -> WHERE AMT IS NULL OR AMT=0;
+Empty set (0.00 sec)
+
+
+======================================================================================================================================================
