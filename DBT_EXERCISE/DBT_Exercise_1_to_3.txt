@@ -1,0 +1,1267 @@
+								//EXERCISE 1//
+
+Microsoft Windows [Version 10.0.19045.5608]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 9.0\bin>mysql -u harshada -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 9.0.1 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| labwork            |
+| performance_schema |
++--------------------+
+3 rows in set (0.01 sec)
+
+mysql> use labwork;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_labwork |
++-------------------+
+| customers         |
+| orders            |
+| salespeople       |
++-------------------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE TABLE SEMP(
+    -> EMPNO CHAR(4),
+    -> EMPNAME CHAR(20),
+    -> BASIC FLOAT
+    -> ^C
+mysql> CREATE TABLE SEMP(
+    -> EMPNO CHAR(4),
+    -> EMPNAME CHAR(20),
+    -> BASIC FLOAT,
+    -> DEPTNO CHAR(2),
+    -> DEPTHEAD CHAR(4));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> CREATE TABLE SDEPT(
+    -> DEPTNO CHAR(2),
+    -> DEPTNAME CHAR(15));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO SDEPT
+    -> VALUES(10,'Development'),
+    -> (20,'Training');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO SEMP
+    -> VALUES(0001,'SUNIL,6000,10),
+    '> VALUES(0001,'SUNIL^C000,20),
+mysql> INSERT INTO SEMP(EMPNO,EMPNAME,BASIC,DEPTNO,DEPTHEAD)
+    -> VALUES(0001,'SUNIL,6000,10),
+    '> VALUES(0001,'SUNIL,6000,1^C,
+mysql> INSERT INTO SEMP(EMPNO,EMPNAME,BASIC,DEPTNO,DEPTHEAD)
+    -> VALUES(0001,'SUNIL',6000,10),
+    -> (0002,'HIREN',8000,20),
+    -> (0003,'ALI',4000^C0),
+mysql> INSERT INTO SEMP(EMPNO,EMPNAME,BASIC,DEPTNO,DEPTHEAD)
+    -> VALUES(0001,'SUNIL',6000,10,null),
+    -> (0002,'HEREN',8000,20,null),
+    -> (0003,'ALI',4000,10,0001),
+    -> (0004,'GEORGE',6000,null,0002);
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM LABWORK SEMP;
+ERROR 1146 (42S02): Table 'labwork.labwork' doesn't exist
+mysql> SELECT * FROM LABWORK.SEMP;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 1     | SUNIL   |  6000 | 10     | NULL     |
+| 2     | HEREN   |  8000 | 20     | NULL     |
+| 3     | ALI     |  4000 | 10     | 1        |
+| 4     | GEORGE  |  6000 | NULL   | 2        |
++-------+---------+-------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM LABWORK.SDEPT;
++--------+-------------+
+| DEPTNO | DEPTNAME    |
++--------+-------------+
+| 10     | Development |
+| 20     | Training    |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SEMP;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 1     | SUNIL   |  6000 | 10     | NULL     |
+| 2     | HEREN   |  8000 | 20     | NULL     |
+| 3     | ALI     |  4000 | 10     | 1        |
+| 4     | GEORGE  |  6000 | NULL   | 2        |
++-------+---------+-------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE SEMP
+    -> SET EMPNO='0001'
+    -> WHERE EMPNAME='SUNIL';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SET EMPNO='0001'
+    -> ^C
+mysql> SELECT * FROM SEMP;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 0001  | SUNIL   |  6000 | 10     | NULL     |
+| 2     | HEREN   |  8000 | 20     | NULL     |
+| 3     | ALI     |  4000 | 10     | 1        |
+| 4     | GEORGE  |  6000 | NULL   | 2        |
++-------+---------+-------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE SEMP
+    -> SET EMPNO='0002'
+    -> WHERE EMPNAME='HEREN';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE SEMP
+    -> SET EMPNAME='HIREN'
+    -> WHERE EMPNO='0002';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM SEMP;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 0001  | SUNIL   |  6000 | 10     | NULL     |
+| 0002  | HIREN   |  8000 | 20     | NULL     |
+| 3     | ALI     |  4000 | 10     | 1        |
+| 4     | GEORGE  |  6000 | NULL   | 2        |
++-------+---------+-------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDAT SEMP
+    -> SET EMPNO='0003'
+    -> WHERE EMPNAME='ALI';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDAT SEMP
+SET EMPNO='0003'
+WHERE EMPNAME='ALI'' at line 1
+mysql> UPDATE SEMP
+    -> SET EMPNO='0003'
+    -> WHERE EMPNAME='ALI';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE SEMP
+    -> SET EMPNO='0004'
+    -> WHERE EMPNAME='GEORGE';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM SEMP;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 0001  | SUNIL   |  6000 | 10     | NULL     |
+| 0002  | HIREN   |  8000 | 20     | NULL     |
+| 0003  | ALI     |  4000 | 10     | 1        |
+| 0004  | GEORGE  |  6000 | NULL   | 2        |
++-------+---------+-------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE SEMP
+    -> SET DEPTHEAD='0001'
+    -> WHERE EMPNO='0003'
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE SEMP
+    -> SET DEPTHEAD='0002'
+    -> WHERE EMPNO='0004';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM SEMP
+    -> ^C
+mysql> SELECT * FROM SEMP;
++-------+---------+-------+--------+----------+
+| EMPNO | EMPNAME | BASIC | DEPTNO | DEPTHEAD |
++-------+---------+-------+--------+----------+
+| 0001  | SUNIL   |  6000 | 10     | NULL     |
+| 0002  | HIREN   |  8000 | 20     | NULL     |
+| 0003  | ALI     |  4000 | 10     | 0001     |
+| 0004  | GEORGE  |  6000 | NULL   | 0002     |
++-------+---------+-------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE SUPPLIER(
+    -> `S#` CHAR(10),
+    -> SNAME char(10),
+    -> STATUS CHAR(10),
+    -> CITY CHAR(10));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SHOW TABLE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> DESC SUPPLIER;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| S#     | char(10) | YES  |     | NULL    |       |
+| SNAME  | char(10) | YES  |     | NULL    |       |
+| STATUS | char(10) | YES  |     | NULL    |       |
+| CITY   | char(10) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> CREATE TABLE PARTS(
+    -> `P#` CHAR(10),
+    -> PNAME CHAR(10),
+    -> COLOR CHAR(10),
+    -> WEIGHT CHAR(10),
+    -> CITY CHAR(10));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC PARTS;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| P#     | char(10) | YES  |     | NULL    |       |
+| PNAME  | char(10) | YES  |     | NULL    |       |
+| COLOR  | char(10) | YES  |     | NULL    |       |
+| WEIGHT | char(10) | YES  |     | NULL    |       |
+| CITY   | char(10) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE PROJECTS(
+    -> `J#` CHAR(10),
+    -> JNAME CHAR(10),
+    -> CITY CHAR(10),
+    -> ^C
+mysql> CREATE TABLE PROJECTS(
+    -> `J#` CHAR(10),
+    -> JNAME CHAR(10),
+    -> CITY CHAR(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC PROJECTS;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| J#    | char(10) | YES  |     | NULL    |       |
+| JNAME | char(10) | YES  |     | NULL    |       |
+| CITY  | char(10) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE SUPPLIER-PARTS-PROJECT(
+    -> `S#` CHAR(10),
+    -> `P#` CHAR(10),
+    -> 'J#` CHAR(10),
+    '> QTY CHAR(10));
+    '>
+    '> ^C
+mysql> CREATE TABLE SUPPLIER-PARTS-PROJECT(
+    -> `S#` CHAR(10),
+    -> `P#` CHAR(10),
+    -> `J#` CHAR(10),
+    -> QTY CHAR(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-PARTS-PROJECT(
+`S#` CHAR(10),
+`P#` CHAR(10),
+`J#` CHAR(10),
+QTY CHAR(10))' at line 1
+mysql> QTY CHAR(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'QTY CHAR(10))' at line 1
+mysql> SELECT USER;
+ERROR 1054 (42S22): Unknown column 'USER' in 'field list'
+mysql> SELECT USER();
++--------------------+
+| USER()             |
++--------------------+
+| harshada@localhost |
++--------------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT USER, HOST FROM MYSQL.USER;
+ERROR 1142 (42000): SELECT command denied to user 'harshada'@'localhost' for table 'user'
+mysql>
+
+
+
+
+
+2nd question : 
+
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 9.0.1 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> mysql -u harshada -p
+    -> ^C
+mysql> system -u harshada -p
+'-u' is not recognized as an internal or external command,
+operable program or batch file.
+mysql> mysql -u -p
+    -> ^C
+mysql> system mysql -u harshada -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 9.0.1 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select user();
++--------------------+
+| user()             |
++--------------------+
+| harshada@localhost |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> use labwork;
+Database changed
+mysql> show tables;
++------------------------+
+| Tables_in_labwork      |
++------------------------+
+| customers              |
+| orders                 |
+| parts                  |
+| projects               |
+| salespeople            |
+| sdept                  |
+| semp                   |
+| supplier               |
+| supplier-parts-project |
++------------------------+
+9 rows in set (0.04 sec)
+
+mysql> INSERT INTO SUPPLIER(`S#`, SNAME,STATUS, CITY)
+    -> VALUES('S1','HARSHA',20,'LONDON'),
+    -> ('S2','OMKAR',20,'PARIS'),
+    -> ('S2','OMKAR',20,'^CHENS'),
+mysql> INSERT INTO SUPPLIER(`S#`, SNAME,STATUS, CITY)
+    -> VALUES('S1','Harsha',20,'London'),
+    -> ('S2','Omkar',20,'Paris'),
+    -> ('S3','Shubham',25,'Athens'),
+    -> ('S4','Saii',15,'Paris'),
+    -> ('S5','Kedar',25,'London');
+Query OK, 5 rows affected (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO PARTS(`P#`, PNAME,COLOR,WEIGHT,CITY)
+    ->  VALUES('P1','Nut','Black',^C
+mysql> ALTER TABLE PARTS MODIFY COLUMN WEIGHT FLOAT;
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO PARTS(`P#`, PNAME,COLOR,WEIGHT,CITY)
+    -> values('P1','Nut','Black',10.0,'London'),
+    -> ('P2','Bolt','Gray',15.0,'Paris'),
+    -> ('P3','Screw','Black',45.0,'Athens'),
+    -> ('P4','Washer','Black',34.0,'Paris');
+Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO PROJECTS(`J#`,JNAME,CITY)
+    -> VALUES('J1','ABC','London'),
+    -> ('J2','PQR','Paris'),
+    -> ('J3','XYZ','London'),
+    -> ('J4','EFG','Athens');
+Query OK, 4 rows affected (0.09 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO `SUPPLIER-PARTS-PROJECT`
+    -> VALUES('S1','P1','J1','5'),
+    -> ('S2','P2','J2','4'),
+    -> ('S3','P3','J3','8'),
+    -> ('S4','P4','J4','3');
+Query OK, 4 rows affected (0.05 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM SUPPLIER;
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S1   | Harsha  | 20     | London |
+| S2   | Omkar   | 20     | Paris  |
+| S3   | Shubham | 25     | Athens |
+| S4   | Saii    | 15     | Paris  |
+| S5   | Kedar   | 25     | London |
++------+---------+--------+--------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT `S#`,SNAME;
+ERROR 1054 (42S22): Unknown column 'S#' in 'field list'
+mysql> SELECT `S#`,SNAME FROM SUPPLIER;
++------+---------+
+| S#   | SNAME   |
++------+---------+
+| S1   | Harsha  |
+| S2   | Omkar   |
+| S3   | Shubham |
+| S4   | Saii    |
+| S5   | Kedar   |
++------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT PNAME,COLOR
+    -> FROM PARTS
+    -> WHERE CITY='London';
++-------+-------+
+| PNAME | COLOR |
++-------+-------+
+| Nut   | Black |
++-------+-------+
+1 row in set (0.01 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> WHERE CITY= 'London';
++------+--------+--------+--------+
+| S#   | SNAME  | STATUS | CITY   |
++------+--------+--------+--------+
+| S1   | Harsha | 20     | London |
+| S5   | Kedar  | 25     | London |
++------+--------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> WHERE CITY='Paris' OR CITY= 'Athens';
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S2   | Omkar   | 20     | Paris  |
+| S3   | Shubham | 25     | Athens |
+| S4   | Saii    | 15     | Paris  |
++------+---------+--------+--------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * FROM PROJECTS
+    -> WHERE CITY= 'Athens';
++------+-------+--------+
+| J#   | JNAME | CITY   |
++------+-------+--------+
+| J4   | EFG   | Athens |
++------+-------+--------+
+1 row in set (0.01 sec)
+
+mysql> SELECT * FROM PARTS
+    -> WHERE PNAME^C
+mysql> SELECT PNAME,WEIGHT
+    -> WHERE WEIGHT>=12 OR WEIGHT<=14;
+ERROR 1054 (42S22): Unknown column 'PNAME' in 'field list'
+mysql> SELECT PNAME,WEIGHT FROM PARTS
+    -> WHERE WEIGHT>=12 OR WEIGHT<=14;
++--------+--------+
+| PNAME  | WEIGHT |
++--------+--------+
+| Nut    |     10 |
+| Bolt   |     15 |
+| Screw  |     45 |
+| Washer |     34 |
++--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> WHERE STATUS>=20;
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S1   | Harsha  | 20     | London |
+| S2   | Omkar   | 20     | Paris  |
+| S3   | Shubham | 25     | Athens |
+| S5   | Kedar   | 25     | London |
++------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> WHERE CITY!='London';
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S2   | Omkar   | 20     | Paris  |
+| S3   | Shubham | 25     | Athens |
+| S4   | Saii    | 15     | Paris  |
++------+---------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT CITY FROM SUPPLIER;
++--------+
+| CITY   |
++--------+
+| London |
+| Paris  |
+| Athens |
++--------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT (WEIGHT*1000) AS MILLIGRAMS,
+    -> (WEIGHT*0.001) AS KILOGRAMSL
+    -> \\\^C
+mysql> INSERT INTO SUPPLIER(`S#`, SNAME,STATUS, CITY)^C
+mysql> INSERT INTO SUPPLIER(`S#`, SNAME,STATUS, CITY)^C
+mysql> SELECT (WEIGHT*1000) AS MILLIGRAMS,
+    -> (WEIGHT*0.001) AS KILOGRAMS ,WEIGHT FROM
+    -> PARTS;
++------------+-----------+--------+
+| MILLIGRAMS | KILOGRAMS | WEIGHT |
++------------+-----------+--------+
+|      10000 |      0.01 |     10 |
+|      15000 |     0.015 |     15 |
+|      45000 |     0.045 |     45 |
+|      34000 |     0.034 |     34 |
++------------+-----------+--------+
+4 rows in set (0.01 sec)
+
+mysql> Enter password: ****
+    -> Welcome to the MySQL monitor.  Commands end with ; or \g.
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Enter password: ****
+Welcome to the MySQL monitor.  Commands end with' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'or' at line 1
+    -> Your MySQL connection id is 8
+    -> Server version: 9.0.1 MySQL Community Server - GPL
+    ->
+    -> Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+    ->
+    -> Oracle is a registered trademark of Oracle Corporation and/or its
+    -> affiliates. Other names may be trademarks of their respective
+    -> owners.
+    ->
+    -> Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+    ->
+    -> mysql> select user();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.
+Your MySQL connection id is 8
+Server version: 9.0.1 MySQL Community Server - G' at line 1
+mysql> +----------------+
+    -> | user()         |
+    -> +----------------+
+    -> | root@localhost |
+    -> +----------------+
+    -> 1 row in set (0.00 sec)
+    ->
+    -> mysql> mysql -u harshada -p
+    ->     -> ^C
+    -> mysql> system -u harshada -p
+    -> '-u' is not recognized as an internal or external command,
+    -> operable program or batch file.
+    -> mysql> mysql -u -p
+    ->     -> ^C
+    -> mysql> system mysql -u harshada -p
+    -> Enter password: ****
+    -> Welcome to the MySQL monitor.  Commands end with ; or \g.
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+----------------+
+| user()         |
++----------------+
+| root@localhost |
++---' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'or' at line 1
+    -> Your MySQL connection id is 9
+    -> Server version: 9.0.1 MySQL Community Server - GPL
+    ->
+    -> Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+    ->
+    -> Oracle is a registered trademark of Oracle Corporation and/or its
+    -> affiliates. Other names may be trademarks of their respective
+    -> owners.
+    ->
+    -> Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+    ->
+    -> mysql> select user();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.
+Your MySQL connection id is 9
+Server version: 9.0.1 MySQL Community Server - G' at line 1
+mysql> +--------------------+
+    -> | user()             |
+    -> +--------------------+
+    -> | harshada@localhost |
+    -> +--------------------+
+    -> 1 row in set (0.00 sec)
+    ->
+    -> mysql> use labwork;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------------------+
+| user()             |
++--------------------+
+| harshada@' at line 1
+mysql> Database changed
+    -> mysql> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Database changed
+mysql> show tables' at line 1
+mysql> +------------------------+
+    -> | Tables_in_labwork      |
+    -> +------------------------+
+    -> | customers              |
+    -> | orders                 |
+    -> | parts                  |
+    -> | projects               |
+    -> | salespeople            |
+    -> | sdept                  |
+    -> | semp                   |
+    -> | supplier               |
+    -> | supplier-parts-project |
+    -> +------------------------+
+    -> 9 rows in set (0.04 sec)
+    ->
+    -> mysql> INSERT INTO SUPPLIER(`S#`, SNAME,STATUS, CITY)
+    ->     -> VALUES('S1','HARSHA',20,'LONDON'),
+    ->     -> ('S2','OMKAR',20,'PARIS'),
+    ->     -> ('S2','OMKAR',20,'^CHENS'),
+    -> mysql> INSERT INTO SUPPLIER(`S#`, SNAME,STATUS, CITY)
+    ->     -> VALUES('S1','Harsha',20,'London'),
+    ->     -> ('S2','Omkar',20,'Paris'),
+    ->     -> ('S3','Shubham',25,'Athens'),
+    ->     -> ('S4','Saii',15,'Paris'),
+    ->     -> ('S5','Kedar',25,'London');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------------------+
+| Tables_in_labwork      |
++------------------------+' at line 1
+mysql> Query OK, 5 rows affected (0.05 sec)
+    -> Records: 5  Duplicates: 0  Warnings: 0
+    ->
+    -> mysql> INSERT INTO PARTS(`P#`, PNAME,COLOR,WEIGHT,CITY)
+    ->     ->  VALUES('P1','Nut','Black',^C
+    -> mysql> ALTER TABLE PARTS MODIFY COLUMN WEIGHT FLOAT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 5 rows affected (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mys' at line 1
+mysql> Query OK, 0 rows affected (0.13 sec)
+    -> Records: 0  Duplicates: 0  Warnings: 0
+    ->
+    -> mysql> INSERT INTO PARTS(`P#`, PNAME,COLOR,WEIGHT,CITY)
+    ->     -> values('P1','Nut','Black',10.0,'London'),
+    ->     -> ('P2','Bolt','Gray',15.0,'Paris'),
+    ->     -> ('P3','Screw','Black',45.0,'Athens'),
+    ->     -> ('P4','Washer','Black',34.0,'Paris');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mys' at line 1
+mysql> Query OK, 4 rows affected (0.03 sec)
+    -> Records: 4  Duplicates: 0  Warnings: 0
+    ->
+    -> mysql> INSERT INTO PROJECTS(`J#`,JNAME,CITY)
+    ->     -> VALUES('J1','ABC','London'),
+    ->     -> ('J2','PQR','Paris'),
+    ->     -> ('J3','XYZ','London'),
+    ->     -> ('J4','EFG','Athens');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mys' at line 1
+mysql> Query OK, 4 rows affected (0.09 sec)
+    -> Records: 4  Duplicates: 0  Warnings: 0
+    ->
+    -> mysql> INSERT INTO `SUPPLIER-PARTS-PROJECT`
+    ->     -> VALUES('S1','P1','J1','5'),
+    ->     -> ('S2','P2','J2','4'),
+    ->     -> ('S3','P3','J3','8'),
+    ->     -> ('S4','P4','J4','3');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 4 rows affected (0.09 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mys' at line 1
+mysql> Query OK, 4 rows affected (0.05 sec)
+    -> Records: 4  Duplicates: 0  Warnings: 0
+    ->
+    -> mysql> SELECT * FROM SUPPLIER;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Query OK, 4 rows affected (0.05 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mys' at line 1
+mysql> +------+---------+--------+--------+
+    -> | S#   | SNAME   | STATUS | CITY   |
+    -> +------+---------+--------+--------+
+    -> | S1   | Harsha  | 20     | London |
+    -> | S2   | Omkar   | 20     | Paris  |
+    -> | S3   | Shubham | 25     | Athens |
+    -> | S4   | Saii    | 15     | Paris  |
+    -> | S5   | Kedar   | 25     | London |
+    -> +------+---------+--------+--------+
+    -> 5 rows in set (0.01 sec)
+    ->
+    -> mysql> SELECT `S#`,SNAME;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++-----' at line 1
+mysql> ERROR 1054 (42S22): Unknown column 'S#' in 'field list'
+    -> mysql> SELECT `S#`,SNAME FROM SUPPLIER;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1054 (42S22): Unknown column 'S#' in 'field list'
+mysql> SELECT `S#`,SNAME' at line 1
+mysql> +------+---------+
+    -> | S#   | SNAME   |
+    -> +------+---------+
+    -> | S1   | Harsha  |
+    -> | S2   | Omkar   |
+    -> | S3   | Shubham |
+    -> | S4   | Saii    |
+    -> | S5   | Kedar   |
+    -> +------+---------+
+    -> 5 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT PNAME,COLOR
+    ->     -> FROM PARTS
+    ->     -> WHERE CITY='London';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------+---------+
+| S#   | SNAME   |
++------+---------+
+| S1   | Harsha  |
+| S2' at line 1
+mysql> +-------+-------+
+    -> | PNAME | COLOR |
+    -> +-------+-------+
+    -> | Nut   | Black |
+    -> +-------+-------+
+    -> 1 row in set (0.01 sec)
+    ->
+    -> mysql> SELECT * FROM SUPPLIER
+    ->     -> WHERE CITY= 'London';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------+-------+
+| PNAME | COLOR |
++-------+-------+
+| Nut   | Black |
++-------' at line 1
+mysql> +------+--------+--------+--------+
+    -> | S#   | SNAME  | STATUS | CITY   |
+    -> +------+--------+--------+--------+
+    -> | S1   | Harsha | 20     | London |
+    -> | S5   | Kedar  | 25     | London |
+    -> +------+--------+--------+--------+
+    -> 2 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM SUPPLIER
+    ->     -> WHERE CITY='Paris' OR CITY= 'Athens';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------+--------+--------+--------+
+| S#   | SNAME  | STATUS | CITY   |
++------+' at line 1
+mysql> +------+---------+--------+--------+
+    -> | S#   | SNAME   | STATUS | CITY   |
+    -> +------+---------+--------+--------+
+    -> | S2   | Omkar   | 20     | Paris  |
+    -> | S3   | Shubham | 25     | Athens |
+    -> | S4   | Saii    | 15     | Paris  |
+    -> +------+---------+--------+--------+
+    -> 3 rows in set (0.01 sec)
+    ->
+    -> mysql> SELECT * FROM PROJECTS
+    ->     -> WHERE CITY= 'Athens';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++-----' at line 1
+mysql> +------+-------+--------+
+    -> | J#   | JNAME | CITY   |
+    -> +------+-------+--------+
+    -> | J4   | EFG   | Athens |
+    -> +------+-------+--------+
+    -> 1 row in set (0.01 sec)
+    ->
+    -> mysql> SELECT * FROM PARTS
+    ->     -> WHERE PNAME^C
+    -> mysql> SELECT PNAME,WEIGHT
+    ->     -> WHERE WEIGHT>=12 OR WEIGHT<=14;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------+-------+--------+
+| J#   | JNAME | CITY   |
++------+-------+--------+
+| ' at line 1
+mysql> ERROR 1054 (42S22): Unknown column 'PNAME' in 'field list'
+    -> mysql> SELECT PNAME,WEIGHT FROM PARTS
+    ->     -> WHERE WEIGHT>=12 OR WEIGHT<=14;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ERROR 1054 (42S22): Unknown column 'PNAME' in 'field list'
+mysql> SELECT PNAME,W' at line 1
+mysql> +--------+--------+
+    -> | PNAME  | WEIGHT |
+    -> +--------+--------+
+    -> | Nut    |     10 |
+    -> | Bolt   |     15 |
+    -> | Screw  |     45 |
+    -> | Washer |     34 |
+    -> +--------+--------+
+    -> 4 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM SUPPLIER
+    ->     -> WHERE STATUS>=20;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------+--------+
+| PNAME  | WEIGHT |
++--------+--------+
+| Nut    |     10 |
+' at line 1
+mysql> +------+---------+--------+--------+
+    -> | S#   | SNAME   | STATUS | CITY   |
+    -> +------+---------+--------+--------+
+    -> | S1   | Harsha  | 20     | London |
+    -> | S2   | Omkar   | 20     | Paris  |
+    -> | S3   | Shubham | 25     | Athens |
+    -> | S5   | Kedar   | 25     | London |
+    -> +------+---------+--------+--------+
+    -> 4 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT * FROM SUPPLIER
+    ->     -> WHERE CITY!='London';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++-----' at line 1
+mysql> +------+---------+--------+--------+
+    -> | S#   | SNAME   | STATUS | CITY   |
+    -> +------+---------+--------+--------+
+    -> | S2   | Omkar   | 20     | Paris  |
+    -> | S3   | Shubham | 25     | Athens |
+    -> | S4   | Saii    | 15     | Paris  |
+    -> +------+---------+--------+--------+
+    -> 3 rows in set (0.00 sec)
+    ->
+    -> mysql> SELECT DISTINCT CITY FROM SUPPLIER;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++-----' at line 1
+mysql> +--------+
+    -> | CITY   |
+    -> +--------+
+    -> | London |
+    -> | Paris  |
+    -> | Athens |
+    -> +--------+
+    -> 3 rows in set (0.01 sec)
+    ->
+    -> mysql> SELECT (WEIGHT*1000) AS MILLIGRAMS,
+    ->     -> (WEIGHT*0.001) AS KILOGRAMSL
+    ->     -> \\\^C
+ERROR:
+Unknown command '\\'.
+ERROR:
+Unknown command '\^'.
+    -> mysql> INSERT INTO SUPPLIER(`S#`, SNAME,STATUS, CITY)^C
+    -> mysql> INSERT INTO SUPPLIER(`S#`, SNAME,STATUS, CITY)^C
+    -> mysql> SELECT (WEIGHT*1000) AS MILLIGRAMS,
+    ->     -> (WEIGHT*0.001) AS KILOGRAMS ,WEIGHT FROM
+    ->     -> PARTS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+--------+
+| CITY   |
++--------+
+| London |
+| Paris  |
+| Athens |
++--------+
+3 r' at line 1
+mysql> +------------+-----------+--------+
+    -> | MILLIGRAMS | KILOGRAMS | WEIGHT |
+    -> +------------+-----------+--------+
+    -> |      10000 |      0.01 |     10 |
+    -> |      15000 |     0.015 |     15 |
+    -> |      45000 |     0.045 |     45 |
+    -> |      34000 |     0.034 |     34 |
+    -> +------------+-----------+--------+
+    -> 4 rows in set (0.01 sec)
+    ->
+    -> mysql>
+	=========================================================================================================================================
+	
+													//EXERCISE 2//
+
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 9.0.1 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> system -u harshada -p
+'-u' is not recognized as an internal or external command,
+operable program or batch file.
+mysql> system mysql -u harshada -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 9.0.1 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| labwork            |
+| performance_schema |
++--------------------+
+3 rows in set (0.07 sec)
+
+mysql> use labwork;
+Database changed
+mysql> show tables;
++------------------------+
+| Tables_in_labwork      |
++------------------------+
+| customers              |
+| orders                 |
+| parts                  |
+| projects               |
+| salespeople            |
+| sdept                  |
+| semp                   |
+| supplier               |
+| supplier-parts-project |
++------------------------+
+9 rows in set (0.01 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> ORDER BY CITY;
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S3   | Shubham | 25     | Athens |
+| S1   | Harsha  | 20     | London |
+| S5   | Kedar   | 25     | London |
+| S2   | Omkar   | 20     | Paris  |
+| S4   | Saii    | 15     | Paris  |
++------+---------+--------+--------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT * FROM PARTS
+    -> ;
++------+--------+-------+--------+--------+
+| P#   | PNAME  | COLOR | WEIGHT | CITY   |
++------+--------+-------+--------+--------+
+| P1   | Nut    | Black |     10 | London |
+| P2   | Bolt   | Gray  |     15 | Paris  |
+| P3   | Screw  | Black |     45 | Athens |
+| P4   | Washer | Black |     34 | Paris  |
++------+--------+-------+--------+--------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT * FROM PARTS
+    -> ORDER BY CITY, PNAME;
++------+--------+-------+--------+--------+
+| P#   | PNAME  | COLOR | WEIGHT | CITY   |
++------+--------+-------+--------+--------+
+| P3   | Screw  | Black |     45 | Athens |
+| P1   | Nut    | Black |     10 | London |
+| P2   | Bolt   | Gray  |     15 | Paris  |
+| P4   | Washer | Black |     34 | Paris  |
++------+--------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PARTS
+    -> ORDER BY CITY;
++------+--------+-------+--------+--------+
+| P#   | PNAME  | COLOR | WEIGHT | CITY   |
++------+--------+-------+--------+--------+
+| P3   | Screw  | Black |     45 | Athens |
+| P1   | Nut    | Black |     10 | London |
+| P2   | Bolt   | Gray  |     15 | Paris  |
+| P4   | Washer | Black |     34 | Paris  |
++------+--------+-------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> WHERE STATUS BETEWEEN 10 AND 20;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'BETEWEEN 10 AND 20' at line 2
+mysql> DESC SUPPLIER;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| S#     | char(10) | YES  |     | NULL    |       |
+| SNAME  | char(10) | YES  |     | NULL    |       |
+| STATUS | char(10) | YES  |     | NULL    |       |
+| CITY   | char(10) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> ALTER TABLE SUPPLIER MODIFY COLUMN STATUS INT;
+Query OK, 5 rows affected (0.16 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> DESC SUPPLIER;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| S#     | char(10) | YES  |     | NULL    |       |
+| SNAME  | char(10) | YES  |     | NULL    |       |
+| STATUS | int      | YES  |     | NULL    |       |
+| CITY   | char(10) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER;
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S1   | Harsha  |     20 | London |
+| S2   | Omkar   |     20 | Paris  |
+| S3   | Shubham |     25 | Athens |
+| S4   | Saii    |     15 | Paris  |
+| S5   | Kedar   |     25 | London |
++------+---------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> WHERE STATUS BETWEEN 10 AND 20;
++------+--------+--------+--------+
+| S#   | SNAME  | STATUS | CITY   |
++------+--------+--------+--------+
+| S1   | Harsha |     20 | London |
+| S2   | Omkar  |     20 | Paris  |
+| S4   | Saii   |     15 | Paris  |
++------+--------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> WHERE WEIGHT NOT BETWEEN 10 AND 15;
+ERROR 1054 (42S22): Unknown column 'WEIGHT' in 'where clause'
+mysql> SELECT * FROM PARTS
+    -> WHERE WEIGHT NOT BETWEEN 10 AND 15;
++------+--------+-------+--------+--------+
+| P#   | PNAME  | COLOR | WEIGHT | CITY   |
++------+--------+-------+--------+--------+
+| P3   | Screw  | Black |     45 | Athens |
+| P4   | Washer | Black |     34 | Paris  |
++------+--------+-------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT * FROM PARTS
+    -> WHERE PNAME LIKE 'P%';
+Empty set (0.01 sec)
+
+mysql> SELECT * FROM PARTS
+    -> WHERE PNAME LIKE 'p%';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM PARTS
+    -> WHERE PNAME LIKE '^C     %';
+mysql> SELECT * FROM PARTS
+    -> WHERE PNAME LIKE 'O%';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM PARTS
+    -> WHERE PNAME LIKE 'S%';
++------+-------+-------+--------+--------+
+| P#   | PNAME | COLOR | WEIGHT | CITY   |
++------+-------+-------+--------+--------+
+| P3   | Screw | Black |     45 | Athens |
++------+-------+-------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM PARTS
+    -> WHERE PNAME LIKE 'r%';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM PARTS
+    -> WHERE PNAME LIKE '%r';
++------+--------+-------+--------+-------+
+| P#   | PNAME  | COLOR | WEIGHT | CITY  |
++------+--------+-------+--------+-------+
+| P4   | Washer | Black |     34 | Paris |
++------+--------+-------+--------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> WHERE CITY LIKE 'L%';
++------+--------+--------+--------+
+| S#   | SNAME  | STATUS | CITY   |
++------+--------+--------+--------+
+| S1   | Harsha |     20 | London |
+| S5   | Kedar  |     25 | London |
++------+--------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PROJECTS
+    -> WHERE JNAME LIKE '__n%';
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM PROJECTS
+    -> ;
++------+-------+--------+
+| J#   | JNAME | CITY   |
++------+-------+--------+
+| J1   | ABC   | London |
+| J2   | PQR   | Paris  |
+| J3   | XYZ   | London |
+| J4   | EFG   | Athens |
++------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PROJECTS
+    -> WHERE JNAME LIKE '__G%';
++------+-------+--------+
+| J#   | JNAME | CITY   |
++------+-------+--------+
+| J4   | EFG   | Athens |
++------+-------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM PROJECTS
+    -> WHERE JNAME LIKE '_F%';
++------+-------+--------+
+| J#   | JNAME | CITY   |
++------+-------+--------+
+| J4   | EFG   | Athens |
++------+-------+--------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+============================================================================================================================================== 
+
+														//	Exercise 3 //
+											
+mysql> SELECT CONCAT(UPPER(SUBSTRING(SNAME,1,1)),LOWER(SUBSTRING(SNAME,2))) FROM SUPPLIER;
++---------------------------------------------------------------+
+| CONCAT(UPPER(SUBSTRING(SNAME,1,1)),LOWER(SUBSTRING(SNAME,2))) |
++---------------------------------------------------------------+
+| Harsha                                                        |
+| Omkar                                                         |
+| Shubham                                                       |
+| Saii                                                          |
+| Kedar                                                         |
++---------------------------------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER
+    -> ^C
+mysql> SELECT UPPER(SNAME) FROM SUPPLIER;
++--------------+
+| UPPER(SNAME) |
++--------------+
+| HARSHA       |
+| OMKAR        |
+| SHUBHAM      |
+| SAII         |
+| KEDAR        |
++--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT LOWER(SNAME) FROM SUPPLIER;
++--------------+
+| LOWER(SNAME) |
++--------------+
+| harsha       |
+| omkar        |
+| shubham      |
+| saii         |
+| kedar        |
++--------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT LPAD(SNAME,25,' ') FROM SUPPLIER;
++---------------------------+
+| LPAD(SNAME,25,' ')        |
++---------------------------+
+|                    Harsha |
+|                     Omkar |
+|                   Shubham |
+|                      Saii |
+|                     Kedar |
++---------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT REPLACE(SNAME,'ar','AR') FROM SUPPLIER;
++--------------------------+
+| REPLACE(SNAME,'ar','AR') |
++--------------------------+
+| HARsha                   |
+| OmkAR                    |
+| Shubham                  |
+| Saii                     |
+| KedAR                    |
++--------------------------+
+5 rows in set (0.01 sec)
+mysql> SELECT REPLACE(REPLACE(SNAME,'i','r'),'a','o') FROM SUPPLIER;
++-----------------------------------------+
+| REPLACE(REPLACE(SNAME,'i','r'),'a','o') |
++-----------------------------------------+
+| Horsho                                  |
+| Omkor                                   |
+| Shubhom                                 |
+| Sorr                                    |
+| Kedor                                   |
++-----------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT SNAME, LENGTH(SNAME) FROM SUPPLIER;
++---------+---------------+
+| SNAME   | LENGTH(SNAME) |
++---------+---------------+
+| Harsha  |             6 |
+| Omkar   |             5 |
+| Shubham |             7 |
+| Saii    |             4 |
+| Kedar   |             5 |
++---------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SUPPLIER WHERE SOUNDEX(SNAME)= SOUNDEX('BLOKE');
+Empty set (0.01 sec)
+
+mysql> SELECT * FROM SUPPLIER WHERE SOUNDEX(SNAME)= SOUNDEX('SHOOBHAM');
++------+---------+--------+--------+
+| S#   | SNAME   | STATUS | CITY   |
++------+---------+--------+--------+
+| S3   | Shubham |     25 | Athens |
++------+---------+--------+--------+
+1 row in set (0.00 sec)
+
+
+mysql> SELECT(DAYNAME(SYSDATE())) FROM DUAL;
++----------------------+
+| (DAYNAME(SYSDATE())) |
++----------------------+
+| Saturday             |
++----------------------+
+1 row in set (0.01 sec)
+============================================================================================================================================== 

@@ -1,0 +1,82 @@
+
+MySQL 
+Exercise 1 
+1. Write a program that computes the perimeter and the area of a rectangle. Define 
+your own values for the length and width. (Assuming that L and W are the length 
+and width of the rectangle, Perimeter = 2*(L+W) and Area = L*W. 
+Ans:
+mysql> create procedure abc2(x int, y int)
+    -> begin
+    -> declare perimeter int;
+    -> declare area int;
+    -> set perimeter=2*(x*y);
+    -> set area=x*y;
+    -> insert into rectangle values(x,y,perimeter,area);
+    -> end; //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> call abc2(10,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from rectangle;
++--------+-------+-----------+------+
+| length | width | perimeter | area |
++--------+-------+-----------+------+
+|     10 |    20 |       400 |  200 |
++--------+-------+-----------+------+
+1 row in set (0.00 sec)
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+ 
+2. Write a program that declares an integer variable called num, assigns a value to it, 
+and computes and inserts into the tempp table the value of the variable itself, its 
+square, and its cube. 
+ ans: 
+ 
+ mysql> delimiter //
+mysql> create procedure abc3()
+    -> begin
+    -> declare num int;
+    -> declare square int;
+    -> declare cube_val int;
+    -> set num=10;
+    -> set square = num*num;
+    -> set cube_val= num*num*num;
+    -> insert into tempp1 values(num, square, cube_val);
+    -> end; //
+Query OK, 0 rows affected (0.01 sec)
+mysql> call abc3;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tempp1;
++------+---------+----------+
+| num  | num_sqr | num_cube |
++------+---------+----------+
+|   10 |     100 |     1000 |
++------+---------+----------+
+1 row in set (0.00 sec)
+
+ 
+ 
+ 
+ 
+ 
+3. Convert a temperature in Fahrenheit (F) to its equivalent in Celsius (C) and vice 
+versa. The required formulae are:- C= (F-32)*5/9 
+F= 9/5*C + 32 
+Ans: 
+
+
+
+
+ 
+4. Convert a number of inches into yards, feet, and inches. For example, 124 inches 
+equals 3 yards, 1 foot, and 4 inches. 
+ 
+5. Write a program that enables a user to input an integer. The program should then 
+state whether the integer is evenly divisible by 5. 
+ 
+6. Your block should read in two real numbers and tell whether the product of the two 
+numbers is equal to or greater than 100. 

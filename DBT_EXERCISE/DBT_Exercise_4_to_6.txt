@@ -1,0 +1,404 @@
+
+SQL Exercise 4 
+1. Display the minimum Status in the Supplier table.
+ANS:
+mysql> select min(status) from supplier;
++-------------+
+| min(status) |
++-------------+
+|          15 |
++-------------+
+1 row in set (0.01 sec)
+
+------------------------------------------------------------------- 
+ 
+2. Display the maximum Weight in the Parts table. 
+Ans:
+mysql> select max(weight) from parts;
++-------------+
+| max(weight) |
++-------------+
+|          45 |
++-------------+
+1 row in set (0.00 sec)
+
+
+------------------------------------------------------------------------------------
+ 
+3. Display the average Weight of the Parts.
+Ans:
+mysql> select avg(weight) from parts;
++-------------+
+| avg(weight) |
++-------------+
+|          26 |
++-------------+
+1 row in set (0.00 sec)
+
+
+
+----------------------------------------------------------------------------------------------- 
+4. Display the total Quantity sold for part ‘P1’. 
+Ans:
+mysql> select sum(qty) from `supplier-parts-project`
+    -> where `p#`='P1';
++----------+
+| sum(qty) |
++----------+
+|        5 |
++----------+
+1 row in set (0.01 sec)
+
+
+------------------------------------------------------------------------------------------------ 
+5. Display the total Quantity sold for each part. 
+ans:
+mysql> select `p#`,sum(qty) from `supplier-parts-project`
+    -> group by `p#`;
++------+----------+
+| p#   | sum(qty) |
++------+----------+
+| P1   |        5 |
+| P2   |        4 |
+| P3   |        8 |
+| P4   |        3 |
++------+----------+
+
+
+
+------------------------------------------------------------------------------------------------ 
+6. Display the average Quantity sold for each part. 
+Ans:
+
+mysql> select `p#`,avg(qty) from `supplier-parts-project`
+    -> group by `p#`;
++------+----------+
+| p#   | avg(qty) |
++------+----------+
+| P1   |        5 |
+| P2   |        4 |
+| P3   |        8 |
+| P4   |        3 |
++------+----------+
+4 rows in set (0.01 sec)
+
+
+ --------------------------------------------------------------------------
+7. Display the maximum Quantity sold for each part, provided the maximum Quantity 
+is greater than 800. 
+Ans:
+
+mysql> select `p#`,max(qty) from `supplier-parts-project`
+    -> group by `p#`
+    -> having max(qty)>800;
+Empty set (0.00 sec)
+
+
+
+---------------------------------------------------------------------------------------------
+ 
+8. Display the Status and the count of Suppliers with that Status. 
+Ans: 
+mysql> select status,count(*)
+    -> from supplier
+    -> group by status;
++--------+----------+
+| status | count(*) |
++--------+----------+
+|     20 |        2 |
+|     25 |        2 |
+|     15 |        1 |
++--------+----------+
+3 rows in set (0.00 sec)
+
+
+
+------------------------------------------------------------------------------------------------
+ 
+9. Display the count of Projects going on in different cities.
+Ans:
+mysql> select city,count(*)
+    -> from projects
+    -> group by city;
++--------+----------+
+| city   | count(*) |
++--------+----------+
+| London |        2 |
+| Paris  |        1 |
+| Athens |        1 |
++--------+----------+
+3 rows in set (0.00 sec)
+
+
+
+
+-------------------------------------------------------------------------------------------------- 
+ 
+10. What is the difference between COUNT(Status) and COUNT(*) ? 
+Ans
+mysql> select count(status) from supplier;
++---------------+
+| count(status) |
++---------------+
+|             5 |
++---------------+
+	It counts only non_null value present in that column.
+	If a row has null value in that table then it is not counted.
+
+mysql> select count(*) from supplier;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------
+
+	It counts total number of rows in that table even 
+	if some column contain null value.
+	
+
+-------------------------------------------------------------------------------------------------------
+ 
+11. Display the Status and the Count of Suppliers with that Status in the following format 
+as shown below:- 
+ 
+Status Count 
+Ten 1 
+Twenty 2 
+Thirty 3 
+Ans:
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------
+SQL Exercise 5 
+
+1. Display the Supplier name and the Quantity sold. 
+Ans:
+mysql> select s.sname, spp.qty
+    -> from supplier s
+    -> left join `supplier-parts-project` spp
+    -> on s.`s#`= spp.`s#`;
++---------+------+
+| sname   | qty  |
++---------+------+
+| Harsha  | 5    |
+| Omkar   | 4    |
+| Shubham | 8    |
+| Saii    | 3    |
+| Kedar   | NULL |
++---------+------+
+5 rows in set (0.01 sec)
+
+ ---------------------------------------------------------------------------------
+2. Display the Part name and Quantity sold. 
+Ans:mysql> select p.pname, spp.qty
+    -> from parts p
+    -> left join `supplier-parts-project` spp
+    -> on p.`p#`=spp.`p#`;
++--------+------+
+| pname  | qty  |
++--------+------+
+| Nut    | 5    |
+| Bolt   | 4    |
+| Screw  | 8    |
+| Washer | 3    |
++--------+------+
+4 rows in set (0.00 sec)
+
+
+
+------------------------------------------------------------------------------------
+ 
+3. Display the Project name and Quantity sold. 
+Ans:mysql> select p.jname, spp.qty
+    -> from projects p
+    -> left join `supplier-parts-project`spp
+    -> on p.`j#`=spp.`j#`;
++-------+------+
+| jname | qty  |
++-------+------+
+| ABC   | 5    |
+| PQR   | 4    |
+| XYZ   | 8    |
+| EFG   | 3    |
++-------+------+
+4 rows in set (0.00 sec)
+
+----------------------------------------------------------------------- 
+4. Display the Supplier name, Part name, Project name and Quantity sold.
+Ans:
+
+--------------------------------------------------------------------------------- 
+5. Display the Supplier name, Supplying Parts to a Project in the same City. 
+ans:
+mysql> select s.sname,p.pname
+    -> from supplier s
+    -> inner join `supplier-parts-project` spp on s.`s#`=spp.`s#`
+    -> inner join parts p on spp.`p#`=p.`p#`
+    -> where s.city= p.city;
++---------+--------+
+| sname   | pname  |
++---------+--------+
+| Harsha  | Nut    |
+| Omkar   | Bolt   |
+| Shubham | Screw  |
+| Saii    | Washer |
+
+
+
+------------------------------------------------------------------------
+ 
+6. Display the Part name that is ‘Red’ is color, and the Quantity sold.
+ans:
+mysql> select p.pname, spp.qty
+    -> from `supplier-parts-project` spp
+    -> left join parts p
+    -> on spp.`p#`=p.`p#`
+    -> where p.color='red';
+Empty set (0.00 sec)
+
+
+
+
+----------------------------------------------------------------------- 
+ 
+7. Display all the Quantity sold by Suppliers with the Status = 20. 
+mysql> select spp.qty from supplier s
+    -> left join `supplier-parts-project` spp
+    -> on s.`s#`=spp.`s#`
+    -> where status=20;
++------+
+| qty  |
++------+
+| 5    |
+| 4    |
++------+
+2 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------- 
+8. Display all the Parts and Quantity with a Weight > 14. 
+Ans:
+mysql> select p.pname,spp.qty
+    -> from `supplier-parts-project` spp
+    -> left join parts p
+    -> on spp.`p#`=p.`p#`
+    -> where p.weight>14;
++--------+------+
+| pname  | qty  |
++--------+------+
+| Bolt   | 4    |
+| Screw  | 8    |
+| Washer | 3    |
++--------+------+
+3 rows in set (0.01 sec)
+
+-----------------------------------------------------------------------------
+9. Display all the Project names and City, which has bought more than 500 Parts. 
+Ans:
+
+
+
+
+---------------------------------------------------------------------------------
+ 
+10. Display all the Part names and Quantity sold that have a Weight less than 15.
+ans:
+
+
+
+
+------------------------------------------------------------------- 
+ 
+11. Display all the Employee names and the name of their Managers. 
+ans:
+ 
+ mysql> select e1.empname ,e2.empname as manager
+    -> from semp e1
+    -> join  semp e2 on e1.depthead= e2.empno;
++---------+---------+
+| empname | manager |
++---------+---------+
+| ALI     | SUNIL   |
+| GEORGE  | HIREN   |
++---------+---------+
+2 rows in set (0.00 sec)
+
+ 
+ 
+=================================================================================================================================================
+
+SQL Exercise 6 
+
+
+1. Display all the Suppliers with the same Status as the supplier, ‘CLARK’. 
+ 
+2. Display all the Employees in the same department as the employee ‘MILLER’. 
+ ans:mysql> select empname from semp
+    -> where deptno= (select deptno from semp
+    -> where empname='SUNIL');
++---------+
+| empname |
++---------+
+| SUNIL   |
+| ALI     |
++----
+ 
+ 
+ 
+ --------------------------------------------------------------------------------------------
+3. Display all the Parts which have more Weight than all the Red parts. 
+Ans: 
+ 
+4. Display all the Projects going on in the same city as the project ‘TAPE’. 
+ 
+5. Display all the Parts with Weight less than all the Green parts. 
+ 
+6. Display the name of the Supplier who has sold the maximum Quantity (in one sale). 
+ 
+ 
+ 
+ ---------------------------------------------------------------------------------------------
+7. Display the name of the Employee with the minimum Salary. 
+Ans:
+
+mysql> select ename, sal as min_sal
+    -> from emp
+    -> order by min_sal asc
+    -> limit 1 offset 1;
++-------+---------+
+| ename | min_sal |
++-------+---------+
+| A     |    5000 |
++-------+---------+
+1 row in set (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------
+ 
+8. Display the name of the Supplier who has sold the maximum overall Quantity (sum of Sales). 
+Ans:
+
+ ------------------------------------------------------------------------------------------
+9. Display the name of the Department with the maximum number of Employees. 
+Ans:
+mysql> select d.deptname, count(e.empno) count
+    -> from semp e
+    -> join dept d on e.deptno=d.deptid
+    -> group by d.deptname
+    -> order by count
+    -> limit 1 offset 1;
++------------+-------+
+| deptname   | count |
++------------+-------+
+| Accounting |     2 |
++------------+-------+
+1 row in set (0.00 sec)
+
+
+
+
+
+---------------------------------------------------------------------------------------------
